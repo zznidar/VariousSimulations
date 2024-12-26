@@ -97,9 +97,8 @@ function simulate(dimensionality=3)
         dimFactor = 1
     end
 
-#=     global dist1history = []
-    global dist2history = []
- =#
+    global disthistory = []
+
     println(calculate_distances(birds)[1, :])
 
     for i in 1:5000
@@ -109,10 +108,9 @@ function simulate(dimensionality=3)
             break
         end
 
-#=       distances = calculate_distances(birds)
-         push!(dist1history, distances[2])
-        push!(dist2history, distances[3])
- =#
+        distances = calculate_distances(birds)
+        push!(disthistory, distances[1, :])
+
 
         if(i % dimFactor == 0)
             markersize = 0.5 + (i*stepSize)/dimFactor
@@ -137,5 +135,4 @@ simulate(5) # Pass number of dimensions as param (2:5)
 # Save the plot to a file
 #savefig(p, "birds_simulation2.png")
 
-#= plot(dist1history)
-plot!(dist2history) =#
+plot(stack(disthistory)'[:, 2:end÷2+1])
